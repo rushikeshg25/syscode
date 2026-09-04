@@ -51,18 +51,18 @@ const Hero = () => {
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/home"
+              href="/problems"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-sky-400 px-5 py-3.5 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_rgba(56,189,248,0.18)] transition hover:bg-sky-300"
             >
-              Start designing
+              Solve a question
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-            <a
-              href="#how-it-works"
+            <Link
+              href="/home"
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07]"
             >
-              See how it works
-            </a>
+              Open the sandbox
+            </Link>
           </div>
           <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-500">
             {[

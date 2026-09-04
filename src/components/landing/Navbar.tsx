@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const links = [
+  { label: "Questions", href: "/problems" },
   { label: "Why SysCode", href: "#features" },
   { label: "How it works", href: "#how-it-works" },
   { label: "FAQ", href: "#faq" },
@@ -46,10 +47,10 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/home"
+            href="/problems"
             className="hidden rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-sky-100 sm:inline-flex"
           >
-            Open canvas
+            Start practising
           </Link>
           <button
             type="button"
@@ -81,11 +82,11 @@ const Navbar = () => {
               </a>
             ))}
             <Link
-              href="/home"
+              href="/problems"
               className="mt-2 rounded-lg bg-sky-400 px-4 py-3 text-center text-sm font-semibold text-slate-950"
               onClick={() => setIsOpen(false)}
             >
-              Open canvas
+              Start practising
             </Link>
           </div>
         </div>

@@ -1,17 +1,50 @@
 import type { Edge, Node } from "@xyflow/react";
 
 const componentKeys = [
+  // edge
   "client",
+  "mobile",
+  "dns",
+  "cdn",
+  "load-balancer",
+  // entry
   "gateway",
+  "rate-limiter",
+  "auth",
+  // compute
   "service",
+  "worker",
+  "scheduler",
+  "websocket",
+  // data
   "database",
+  "replica",
   "cache",
+  "object-storage",
+  "search-index",
+  "timeseries-db",
+  // async
   "queue",
-  "storage",
-  "cloud",
+  "event-stream",
+  // platform
+  "coordinator",
+  "monitoring",
+  "analytics",
+  "notification",
+  // external
+  "third-party",
 ] as const;
 
 export type ComponentKey = (typeof componentKeys)[number];
+
+/**
+ * Keys used before the palette expanded. Diagrams saved by earlier versions are
+ * still sitting in localStorage, so map them forward instead of rejecting them.
+ */
+const legacyComponentKeys: Record<string, ComponentKey> = {
+  storage: "object-storage",
+  cloud: "third-party",
+};
 
 export type SystemNodeData = {
   label: string;
@@ -30,6 +63,8 @@ export type DiagramDocument = DiagramSnapshot & {
 };
 
 export const DIAGRAM_STORAGE_KEY = "syscode-diagram-v1";
+
+export const problemStorageKey = (slug: string) => `syscode-problem-${slug}-v1`;
 export const SYSTEM_NODE_SIZE = { width: 176, height: 60 } as const;
 
 const componentKeySet = new Set<string>(componentKeys);
@@ -52,12 +87,16 @@ const normalizeNode = (value: unknown): SystemNode | null => {
     typeof data.label !== "string" ||
     !data.label.trim() ||
     typeof data.component !== "string" ||
-    !componentKeySet.has(data.component) ||
     !isFiniteNumber(position.x) ||
     !isFiniteNumber(position.y)
   ) {
     return null;
   }
+
+  const component = componentKeySet.has(data.component)
+    ? (data.component as ComponentKey)
+    : legacyComponentKeys[data.component];
+  if (!component) return null;
 
   return {
     id,
@@ -66,7 +105,7 @@ const normalizeNode = (value: unknown): SystemNode | null => {
     width: SYSTEM_NODE_SIZE.width,
     height: SYSTEM_NODE_SIZE.height,
     data: {
-      component: data.component as ComponentKey,
+      component,
       label: data.label.trim().slice(0, 80),
     },
   };

@@ -16,7 +16,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx src/db/seed.ts",
-    "lint:fix": "pnpm run lint:eslint:fix && pnpm run lint:prettier:fix"
+    "lint:fix": "pnpm run lint:eslint:fix && pnpm run lint:prettier:fix",
+    "validate:content": "tsx --tsconfig tsconfig.json scripts/validate-content.ts"
   },
   "lint-staged": {
     "src/**/*.{js,ts,jsx,tsx}": [
